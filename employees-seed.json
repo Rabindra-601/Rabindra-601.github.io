@@ -1,0 +1,47 @@
+[
+  {
+    "email": "rabindra@tatasteel.com",
+    "name": "Rabindra Murmu",
+    "role": "admin"
+  },
+  {
+    "email": "mithilesh@tatastee.com",
+    "name": "Mithilesh Prasad",
+    "role": "admin"
+  },
+  {
+    "email": "sandeep@tatasteel.com",
+    "name": "Sandeep Giri",
+    "role": "employee"
+  },
+  {
+    "email": "ranjan@tatasteel.com",
+    "name": "Ranjan Nike",
+    "role": "employee"
+  },
+  {
+    "email": "dinesh@tatasteel.com",
+    "name": "Dinesh (full name not provided)",
+    "role": "employee"
+  },
+  {
+    "email": "sameer@tatasteel.com",
+    "name": "Sameer (full name not provided)",
+    "role": "employee"
+  },
+  {
+    "email": "javed@tatasteel.com",
+    "name": "Javed Shaikh",
+    "role": "employee"
+  },
+  {
+    "email": "pratik@tatastee.com",
+    "name": "Pratik Phatak",
+    "role": "employee"
+  },
+  {
+    "email": "shoeb@tatasteel.com",
+    "name": "Shoeb Khan",
+    "role": "employee"
+  }
+]

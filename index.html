@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#14243d"><title>IBM Tarapur / CRCW Roster</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar"><div><h1>IBM Tarapur / CRCW Roster</h1><p>Shared engineer shift management</p></div><span id="session-label" class="session">Not signed in</span></header>
+  <main>
+    <section id="login-view" class="panel login-panel">
+      <h2>Sign in</h2>
+      <form id="login-form">
+        <label>Email<input id="email" type="email" placeholder="your email" autocomplete="username" required></label>
+        <label>Password<input id="password" type="password" placeholder="Password" autocomplete="current-password" required></label>
+        <div class="actions"><button class="primary" type="submit">Sign in</button><button class="secondary" id="reset-password" type="button">Send password reset email</button></div>
+        <p id="login-message" class="message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="app-view" class="hidden">
+      <div class="welcome panel"><div><p class="eyebrow">SIGNED IN AS</p><h2 id="welcome-name">Employee</h2><p id="welcome-email" class="muted"></p></div><button id="logout" class="secondary">Sign out</button></div>
+      <nav class="tabs" aria-label="Dashboard sections"><button class="tab active" data-tab="my-roster">My roster</button><button class="tab" data-tab="my-requests">My requests</button><button class="tab admin-only hidden" data-tab="admin">Admin panel</button></nav>
+
+      <section id="my-roster" class="tab-page">
+        <div class="section-heading"><div><h2>My monthly roster</h2><p class="muted">Only your assigned shifts are shown here.</p></div><input id="roster-month" type="month"></div>
+        <div id="next-shift" class="highlight-card"><span class="muted">Your next shift</span><strong>Loading roster…</strong></div>
+        <div id="roster-list" class="roster-list"></div>
+      </section>
+
+      <section id="my-requests" class="tab-page hidden">
+        <div class="two-col">
+          <form id="request-form" class="panel">
+            <h2>Apply for C-Off / Leave</h2>
+            <label>Request type<select id="request-type"><option value="C-Off">C-Off</option><option value="Leave">Leave</option></select></label>
+            <label>From date<input id="request-from" type="date" required></label>
+            <label>To date<input id="request-to" type="date" required></label>
+            <label>Reason<textarea id="request-reason" rows="3" placeholder="Enter reason" required></textarea></label>
+            <button class="primary" type="submit">Submit request</button><p id="request-message" class="message" aria-live="polite"></p>
+          </form>
+          <div class="panel"><h2>Request status</h2><p class="muted">Your applications and administrator decisions appear here.</p><div id="employee-requests"></div></div>
+        </div>
+      </section>
+
+      <section id="admin" class="tab-page hidden admin-only">
+        <div class="panel">
+          <h2>Import monthly roster</h2><p class="muted">Upload an Excel (.xlsx/.xls) or CSV file. The first row must contain the column headings shown below.</p>
+          <div class="format-note"><b>Required columns:</b> Employee Email, Employee Name, Date, Shift<br><b>Optional:</b> Start Time, End Time, Location, Remarks</div>
+          <label>Roster file<input id="roster-file" type="file" accept=".xlsx,.xls,.csv"></label>
+          <div class="actions"><button id="download-template" class="secondary" type="button">Download Excel template</button><button id="import-roster" class="primary" type="button">Import roster</button></div>
+          <p id="import-message" class="message" aria-live="polite"></p>
+        </div>
+        <div class="panel"><div class="section-heading"><div><h2>All employee requests</h2><p class="muted">Review and decide C-Off / leave applications.</p></div><select id="request-filter"><option value="Pending">Pending first</option><option value="All">All requests</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option></select></div><div id="admin-requests"></div></div>
+        <div class="panel"><h2>Employee access list</h2><p class="muted">Account records and roles are managed securely in Firebase Firestore. See SETUP.md before first use.</p><div id="admin-employee-list"></div></div>
+      </section>
+    </section>
+    <footer>IBM Tarapur / CRCW Roster · Firebase-connected application</footer>
+  </main>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body></html>

@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function myProfile() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function isAdmin() { return signedIn() && myProfile().role == 'admin'; }
+    function isEmployee() { return signedIn() && myProfile().role in ['employee', 'admin']; }
+
+    match /users/{userId} {
+      allow read: if signedIn() && (request.auth.uid == userId || isAdmin());
+      // Provision user profiles from the Firebase Console, not from the public client.
+      allow write: if false;
+    }
+    match /roster/{rosterId} {
+      allow read: if isAdmin() || (isEmployee() && resource.data.employeeEmail == request.auth.token.email);
+      allow create, update, delete: if isAdmin();
+    }
+    match /requests/{requestId} {
+      allow create: if isEmployee()
+        && request.resource.data.employeeEmail == request.auth.token.email
+        && request.resource.data.status == 'Pending'
+        && request.resource.data.keys().hasAll(['employeeEmail','employeeName','type','fromDate','toDate','reason','status','createdAt']);
+      allow read: if isAdmin() || (isEmployee() && resource.data.employeeEmail == request.auth.token.email);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+  }
+}
